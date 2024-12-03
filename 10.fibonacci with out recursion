@@ -28,9 +28,8 @@ int printsum(int n)
 }
 int main()
 {
- int a;
+ int a=4;
  printf("enter the range:\n");
- scanf("%d",&a);
  printf("\nsum:%d",printsum(a));
 }
  
