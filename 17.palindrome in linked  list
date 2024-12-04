@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node { 
+    int data; 
+    struct Node* next; 
+} Node;
+
+Node* reverse(Node* head) {
+    Node *prev = NULL, *curr = head, *next = NULL;
+    while (curr) { next = curr->next; curr->next = prev; prev = curr; curr = next; }
+    return prev;
+}
+
+int isPalindrome(Node* head) {
+    Node *slow = head, *fast = head, *prev = NULL;
+    while (fast && fast->next) { prev = slow; slow = slow->next; fast = fast->next->next; }
+    prev->next = NULL; // Split list
+    Node* rev = reverse(slow); // Reverse second half
+    while (rev && head) { if (rev->data != head->data) return 0; rev = rev->next; head = head->next; }
+    return 1;
+}
+
+int main() {
+    Node *a = malloc(sizeof(Node)); a->data = 1; 
+    Node *b = malloc(sizeof(Node)); b->data = 2; 
+    Node *c = malloc(sizeof(Node)); c->data = 2; 
+    Node *d = malloc(sizeof(Node)); d->data = 1; 
+    a->next = b; b->next = c; c->next = d; d->next = NULL;
+    printf(isPalindrome(a) ? "Palindrome\n" : "Not Palindrome\n");
+    return 0;
+}
